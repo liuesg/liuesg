@@ -27,7 +27,14 @@ return require("packer").startup(function()
 	-- 语法高亮，折叠代码，缩进处理
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 	-- lsp支持
-	use({ "neovim/nvim-lspconfig", "williamboman/nvim-lsp-installer" })
+	--use({ "neovim/nvim-lspconfig", "williamboman/nvim-lsp-installer" })
+    use {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
+        "mfussenegger/nvim-dap",
+         "jayp0521/mason-nvim-dap.nvim",
+    }   
 	-- 模糊匹配工具
 	use("junegunn/fzf")
 	use("junegunn/fzf.vim")
@@ -75,5 +82,6 @@ return require("packer").startup(function()
 	use({ "github/copilot.vim" })
 	-- 格式化代码
 	use({ "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim" })
-	use({ "rlue/vim-barbaric" })
+	use( { "jayp0521/mason-null-ls.nvim"})
+    use({ "rlue/vim-barbaric" })
 end)

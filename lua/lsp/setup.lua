@@ -7,21 +7,34 @@ local lsp_servers = {
 	"html",
 	"bashls",
 	"tsserver",
-    "clangd",
+	"clangd",
 }
 -- using plug "nvim-lsp-installer" to ensure the installation
 -- should before the lsp config
-require("nvim-lsp-installer").setup({
-	ensure_installed = lsp_servers,
-	automatic_installation = true,
-	ui = {
-		icons = {
-			server_installed = "✓",
-			server_pending = "➜",
-			server_uninstalled = "✗",
-		},
+--require("nvim-lsp-installer").setup({
+--	ensure_installed = lsp_servers,
+--	automatic_installation = true,
+--	ui = {
+--		icons = {
+--			server_installed = "✓",
+--			server_pending = "➜",
+--			server_uninstalled = "✗",
+--		},
+--	},
+--})
+
+require("mason").setup({
+	github = {
+		-- The template URL to use when downloading assets from GitHub.
+		-- The placeholders are the following (in order):
+		-- 1. The repository (e.g. "rust-lang/rust-analyzer")
+		-- 2. The release version (e.g. "v0.3.0")
+		-- 3. The asset name (e.g. "rust-analyzer-v0.3.0-x86_64-unknown-linux-gnu.tar.gz")
+		download_url_template = "https://github.com/%s/releases/download/%s/%s",
+		--download_url_template = "git@github.com/%s/releases/download/%s/%s",
 	},
 })
+require("mason-lspconfig").setup()
 -- 需要特殊配置的lsp server
 -- https://github.com/williamboman/nvim-lsp-installer#available-lsps
 -- { key: 语言 value: 配置文件 }
@@ -55,3 +68,7 @@ for _, server in pairs(lsp_servers) do
 		lspconfig[server].setup(options)
 	end
 end
+require("mason-nvim-dap").setup({
+    ensure_installed = { "python", "delve" }
+})
+require("mason-null-ls").setup()
